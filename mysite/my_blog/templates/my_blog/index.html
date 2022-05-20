@@ -1,0 +1,80 @@
+{% extends "my_blog/base.html" %}
+{% block title %}my blog{% endblock %}
+{% block static_files %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'my_blog/index.css' %}">
+{% endblock %}
+{% block content %}
+<div class="flex flex-col items-center">
+  <div class="flex items-center justify-center bg-gray-200 w-8 p-1 hover:bg-gray-300 shadow rounded-3xl">
+    <button type="button" id="blog-post">&#43;</button>
+  </div>
+  <div class="mt-2">
+    <form method="POST" action="/">
+      {% csrf_token %}
+      <div class="hidden" id="new_blog">
+        <div class="h-max w-max p-2 bg-gray-200 shadow rounded-md" name="main-content">
+          <div class="grid grid-cols-[repeat(2,_max-content)] items-center justify-center">
+            <div class="p-1 text-center">
+              <h2>Title:</h2>
+            </div>
+            <div class="p-1">
+              <input name="title" type="text"></input>
+            </div>
+            <div class="p-1">
+              <h2>Paragraph body:</h2>
+            </div>
+            <div class="p-1">
+              <input name="paragraph_body" type="text"></input>
+            </div>
+          </div>
+        </div>
+        <div class="m-2 p-2 bg-gray-200 w-max rounded-sm shadow-md hover:bg-gray-300 justi">
+          <button type="submit" name="newBlog">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="p-2">
+    {% for blog in blogs %}
+    <div class="p-2">
+      <form method="POST" action="/">
+        {% csrf_token %}
+        <div class="h-max w-max p-2 bg-gray-200 shadow rounded-md">
+          <div>
+            {% for blog_item in blogs %}
+            <div class="">
+              {{ blog_item }}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="flex">
+          <div class="m-2 p-2 bg-gray-300 hover:bg-gray-200 rounded-sm shadow">
+            <button type="button" value="edit" id="edit_blog">edit</button>
+          </div>
+          <div class="m-2 p-2 bg-gray-300 hover:bg-gray-200 rounded-sm shadow">
+            <button type="submit" value="save" id="save_blog">save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+{% block right_sidebar %}
+<div class="w-[100%] border-l-4 border-l-gray-500">
+  <div class="text-center">
+    <div>Comments</div>
+    <div>
+      <ul>
+        <li>Comment</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'my_blog/index.js' %}"></script>
+{% endblock %}
