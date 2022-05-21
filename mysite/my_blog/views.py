@@ -22,7 +22,7 @@ def index(response):
     blogs = collection.find()
     blog_structure = []
     for blog in blogs:
-        blog_structure.append([db_item for db_item in blog.values()])
+        blog_structure.append(blog)
     return render(response, "my_blog/index.html", {"blogs": blog_structure})
 
 def about_me(response):

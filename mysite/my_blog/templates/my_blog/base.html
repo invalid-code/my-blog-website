@@ -67,7 +67,7 @@
       </div>
     </nav>
   </div>
-  <div class="hidden text-center">
+  <div class="hidden text-center" id="left-sidebar">
     <a href="/">
       Home
     </a>
@@ -81,9 +81,9 @@
       <div class="m-auto" name="main-content">{% block content %}{% endblock %}</div>
       <div name="right-sidebar">{% block right_sidebar %}{% endblock %}</div>
     </div>
-    <div class="text-center" name="bottom">
-      <footer>footer</footer>
-    </div>
+  </div>
+  <div class="text-center" name="bottom">
+    <footer>footer</footer>
   </div>
   {% block js %}{% endblock %}
 </body>
