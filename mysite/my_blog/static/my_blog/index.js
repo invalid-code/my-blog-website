@@ -20,9 +20,6 @@ $(document).ready(function () {
       $('#left-sidebar').hide();
     }
   });
-  $('#blog-post').click(function () {
-    $('#new_blog').css('display', 'block');
-  });
   $('#edit_blog').click(function () {
     let blog_title = $('#blog_title').text();
     let blog_paragraph = $('#blog_paragraph_body').text();

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import collection, db
+from .models import collection
 from datetime import datetime
 from bson.objectid import ObjectId
 
@@ -36,3 +36,9 @@ def index(response):
 
 def about_me(response):
     return render(response, "my_blog/about_me.html", {})
+
+def blogs(response, blog_id):
+    return render(response, "my_blog/blogs.html", {})
+
+def create_blog(response):
+    return render(response, "my_blog/create_blog.html", {})

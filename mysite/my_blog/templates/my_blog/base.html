@@ -1,4 +1,5 @@
 {% load tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,8 +79,19 @@
   </div>
   <div class="p-2">
     <div class="grid grid-cols-[80%_20%]">
-      <div class="m-auto" name="main-content">{% block content %}{% endblock %}</div>
-      <div name="right-sidebar">{% block right_sidebar %}{% endblock %}</div>
+      <div class="flex justify-center" name="main-content">{% block content %}{% endblock %}</div>
+      <div name="right-sidebar">
+        <div class="w-[100%] border-l-4 border-l-gray-500">
+          <div class="text-center">
+            <div>Comments</div>
+            <div class="text-right">
+              <ul>
+                <li>Comment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="text-center" name="bottom">
