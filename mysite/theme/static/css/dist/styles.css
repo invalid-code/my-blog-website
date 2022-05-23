@@ -683,6 +683,10 @@ select{
   position: absolute;
 }
 
+.relative{
+  position: relative;
+}
+
 .top-\[60px\]{
   top: 60px;
 }
@@ -691,26 +695,17 @@ select{
   left: 0px;
 }
 
-.float-right{
-  float: right;
+.top-1{
+  top: 0.25rem;
 }
 
 .m-auto{
   margin: auto;
 }
 
-.m-2{
-  margin: 0.5rem;
-}
-
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
-}
-
-.my-2{
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .my-1{
@@ -720,10 +715,6 @@ select{
 
 .mt-2{
   margin-top: 0.5rem;
-}
-
-.ml-auto{
-  margin-left: auto;
 }
 
 .block{
@@ -786,16 +777,6 @@ select{
   grid-template-columns: 80% 20%;
 }
 
-.grid-cols-\[repeat\(2\2c _max-content\)\]{
-  grid-template-columns: repeat(2, -webkit-max-content);
-  grid-template-columns: repeat(2, max-content);
-}
-
-.grid-rows-\[repeat\(2\2c _max-content\)\]{
-  grid-template-rows: repeat(2, -webkit-max-content);
-  grid-template-rows: repeat(2, max-content);
-}
-
 .flex-col{
   flex-direction: column;
 }
@@ -814,6 +795,14 @@ select{
 
 .justify-items-end{
   justify-items: end;
+}
+
+.justify-items-center{
+  justify-items: center;
+}
+
+.justify-self-end{
+  justify-self: end;
 }
 
 .rounded-3xl{
@@ -894,6 +883,11 @@ select{
   line-height: 1;
 }
 
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .leading-normal{
   line-height: 1.5;
 }
@@ -908,18 +902,7 @@ select{
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.shadow-md{
-  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
 .hover\:bg-gray-300:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-gray-200:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
