@@ -5,8 +5,8 @@
 {% block static %}{% endblock %}
 
 {% block content %}
-<div class="" id="new_blog" name="new_blog">
-  <form method="POST" action="/">
+<div class="flex justify-center" id="new_blog" name="new_blog">
+  <form method="POST">
     {% csrf_token %}
     <div class="h-max w-max p-2 bg-gray-200 shadow rounded-md items-center justify-center" name="main-content">
       <div class="p-1">
@@ -22,11 +22,9 @@
         <input name="paragraph_body" type="text"></input>
       </div>
       <div class="m-auto my-1 p-2 bg-gray-100 w-max rounded-sm shadow hover:bg-gray-300">
-        <button type="submit" name="newBlog">Submit</button>
+        <button type="submit" value="newBlog" name="newBlog">Submit</button>
       </div>
     </div>
   </form>
 </div>
 {% endblock %}
-
-{% block js %}{% endblock %}

@@ -20,15 +20,15 @@ $(document).ready(function () {
       $('#left-sidebar').hide();
     }
   });
-  $('#edit_blog').click(function () {
-    let blog_title = $('#blog_title').text();
-    let blog_paragraph = $('#blog_paragraph_body').text();
-    $('#blog_title').replaceWith(
-      `<input value=${blog_title} name='blog_title'></input>`
-    );
-    $('#blog_paragraph_body').replaceWith(
-      `<input value=${blog_paragraph} name='blog_paragraph_body'></input>`
-    );
-    $('#cancel_button').css({ display: 'block' });
-  });
+  // $('#edit_blog').click(function () {
+  //   let blog_title = $('#blog_title').text();
+  //   let blog_paragraph = $('#blog_paragraph_body').text();
+  //   $('#blog_title').replaceWith(
+  //     `<input value=${blog_title} name='blog_title'></input>`
+  //   );
+  //   $('#blog_paragraph_body').replaceWith(
+  //     `<input value=${blog_paragraph} name='blog_paragraph_body'></input>`
+  //   );
+  //   $('#cancel_button').css({ display: 'block' });
+  // });
 });

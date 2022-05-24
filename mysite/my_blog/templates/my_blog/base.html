@@ -13,7 +13,7 @@
 </head>
 
 <body class="font-Lato bg-gray-50">
-  <div class="w-screen" name="top">
+  <div class="" name="top">
     <nav>
       <div class="bg-gray-300 p-[7px] flex items-center">
 
@@ -39,10 +39,10 @@
           </div>
         </div>
 
-        <div class="">
+        <div class="flex-1">
           <div class="p-1 flex items-center">
             Logo
-            <img src="" alt="">
+            <!-- <img src="" alt=""> -->
           </div>
         </div>
         <div class="">
@@ -50,7 +50,7 @@
             <form method="POST">
               {% csrf_token %}
               <div class="flex items-center">
-                <div class="p-1">Search:</div>
+                <div class="p-1 font-bold">Search:</div>
                 <input class=""></input>
                 <div class="p-1">
                   <button type="submit">
@@ -79,16 +79,14 @@
   </div>
   <div class="p-2">
     <div class="grid grid-cols-[80%_20%]">
-      <div class="flex justify-center" name="main-content">{% block content %}{% endblock %}</div>
+      <div name="main-content">{% block content %}{% endblock %}</div>
       <div name="right-sidebar">
         <div class="w-[100%] border-l-4 border-l-gray-500">
-          <div class="text-center">
-            <div>Comments</div>
-            <div class="text-right">
-              <ul>
-                <li>Comment</li>
-              </ul>
-            </div>
+          <div class="text-center font-bold text-xl">Comments</div>
+          <div class="text-right">
+            <ul>
+              <li>Comment</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -97,7 +95,7 @@
   <div class="text-center" name="bottom">
     <footer>footer</footer>
   </div>
-  {% block js %}{% endblock %}
+  <script src="{% static 'my_blog/index.js' %}"></script>
 </body>
 
 </html>

@@ -11,49 +11,42 @@
 {% endblock %}
 
 {% block content %}
-<!-- new blog -->
-<div class="fixed right-0">
-  <div class="flex items-center justify-center bg-gray-200 w-8 p-1 hover:bg-gray-300 hover:shadow rounded-3xl">
-    <a href="create-new-blog/" id="blog_post" name="blog_post">&#43;</a>
+<div class="flex justify-center relative">
+  <!-- new blog -->
+  <div class="absolute top-[10px] right-[30px]">
+    <div
+      class="flex items-center justify-center bg-gray-200 w-[35px] p-1 hover:bg-gray-300 hover:shadow rounded-3xl text-xl font-bold">
+      <a href="create-new-blog/" id="blog_post" name="blog_post">&#43;</a>
+    </div>
   </div>
-</div>
-<!--  -->
-<!-- blogs -->
-<div class="grid grid-cols-3">
-  {% for blog in blogs %}
-  <div class="p-2 h-[calc(5rem+max-content)] w-max">
-    <form method="POST" action="/">
-      {% csrf_token %}
-      <a href="blogs/{% mongo_id blog %}">
-        <div class="p-2 bg-gray-200 shadow rounded-sm">
-          <div class="flex">
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="feather feather-info">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-            </div>
-            <div class="text-right text-2xl" id="blog_title" name="blog_title">
-              {{ blog.title }}
-            </div>
-          </div>
-          <div class="hidden" id="blog_time_created" name="blog_time_created">
-            Created at - {{ blog.time }}
-          </div>
-          <div class="text-right" id="blog_paragraph_body" name="blog_paragraph_body">
-            {{ blog.Paragraph_body }}
-          </div>
+  <!--  -->
+  <!-- blogs -->
+  <div class="grid grid-cols-4 gap-4">
+    {% for blog in blogs %}
+    <a class="h-[170px] w-[170px] p-2 bg-gray-200 hover:scale-105 hover:shadow-md shadow rounded-sm"
+      href="blogs/{% mongo_id blog %}">
+      <div class="flex items-center">
+        <div class="flex-grow">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-info">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
         </div>
-      </a>
-    </form>
+        <div class="text-xl font-bold" id="blog_title" name="blog_title">
+          {{ blog.title.capitalize }}
+        </div>
+      </div>
+      <div class="hidden" id="blog_time_created" name="blog_time_created">
+        Created at - {{ blog.time }}
+      </div>
+      <div class="text-right" id="blog_paragraph_body" name="blog_paragraph_body">
+        {{ blog.Paragraph_body }}
+      </div>
+    </a>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
-{% endblock %}
-
-{% block js %}
-<script src="{% static 'my_blog/index.js' %}"></script>
 {% endblock %}
