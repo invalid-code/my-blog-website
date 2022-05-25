@@ -1,4 +1,5 @@
-"""mysite URL Configuration
+"""
+mysite URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -19,7 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("my_blog.urls")),
-    path("blogs/", include("my_blog.urls")),
     path("about-me/", include("my_blog.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]

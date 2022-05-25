@@ -8,86 +8,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
   {% tailwind_css %}
-  {% block static_files %}{% load static %}{% endblock %}
+  {% load static %}
+  {% block static_files %}{% endblock %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body class="font-Lato bg-gray-50">
   <div class="" name="top">
     <nav>
-      <div class="bg-gray-300 p-[7px] flex items-center">
-
-        <div class="w-[45px] text-center">
-          <button type="button" id="left-sidebar-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-        <div class="absolute top-[60px] left-0 w-[60px] bg-gray-200 h-[80vh]" name="left-sidebar">
-          <div class="flex items-center flex-col p-5">
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-              </svg>
+      <div class="bg-gray-300 p-2 flex items-center">
+        <div class="absolute top-[62px] left-0 w-max bg-gray-200 h-[80vh]" name="left-sidebar">
+          <div class="flex items-center flex-col">
+            <div class="sidebar-icon">
+              <a href="/">
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </div>
+              </a>
+            </div>
+            <div class="sidebar-icon">
+              <a href="/about-me">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-user">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </a>
             </div>
           </div>
         </div>
-
         <div class="flex-1">
-          <div class="p-1 flex items-center">
-            Logo
-            <!-- <img src="" alt=""> -->
-          </div>
+          <!-- <div class="p-1 flex h-items-center rounded-3xl">
+            <img src="{% static 'favicon.ico' %}" alt="my logo">
+          </div> -->
         </div>
-        <div class="">
-          <div class="bg-gray-200 w-max p-1 shadow">
-            <form method="POST">
-              {% csrf_token %}
-              <div class="flex items-center">
-                <div class="p-1 font-bold">Search:</div>
-                <input class=""></input>
-                <div class="p-1">
-                  <button type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                  </button>
-                </div>
+        <div class="bg-gray-200 w-max p-1 shadow h-max">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="flex items-center">
+              <input class="mr-1"></input>
+              <div class="p-1">
+                <button type="submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </nav>
   </div>
-  <div class="hidden text-center" id="left-sidebar">
-    <a href="/">
-      Home
-    </a>
-  </div>
-  </div>
-  <div>
-    <div class="hidden text-center"><a href="about-me/">About me</a></div>
-  </div>
-  <div class="p-2">
-    <div class="grid grid-cols-[80%_20%]">
-      <div name="main-content">{% block content %}{% endblock %}</div>
-      <div name="right-sidebar">
-        <div class="w-[100%] border-l-4 border-l-gray-500">
-          <div class="text-center font-bold text-xl">Comments</div>
-          <div class="text-right">
-            <ul>
-              <li>Comment</li>
-            </ul>
-          </div>
+  <div class="grid grid-cols-[80%_20%]">
+    <div class="p-2" name="main-content">{% block content %}{% endblock %}</div>
+    <div class="p-2" name="right-sidebar">
+      <div class="w-[100%] border-l-4 border-l-gray-600">
+        <div class="text-center font-bold text-xl">Comments</div>
+        <div class="text-right">
+          <ul>
+            <li>Comment</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -95,7 +83,7 @@
   <div class="text-center" name="bottom">
     <footer>footer</footer>
   </div>
-  <script src="{% static 'my_blog/index.js' %}"></script>
+  {% block js %}{% endblock %}
 </body>
 
 </html>
