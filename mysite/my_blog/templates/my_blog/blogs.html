@@ -1,32 +1,31 @@
 {% extends "my_blog/base.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ blog_items.title.capitalize }}{% endblock %}
 
 {% load static %}
 {% block static %}{% endblock %}
 
 {% block content %}
-<form method="post">
-  <div
-    class="grid grid-rows-[max-content_85%_max-content] w-[700px] h-[500px] m-auto shadow rounded-sm p-2 bg-gray-200">
-    <div class="">
-      <div class="flex items-center">
-        <div class="flex-grow">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="feather feather-info">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-          </svg>
-        </div>
-        <div class="text-xl font-bold" id="blog_title" name="blog_title">
-          {{ blog_items.title.capitalize }}
-        </div>
+<form method="POST">
+  {% csrf_token %}
+  <div class="flex flex-col w-[700px] h-[500px] m-auto shadow rounded-sm p-2 bg-gray-200">
+    <div class="flex items-center justify-end relative">
+      <div class="peer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-info">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
       </div>
-    </div>
-    <div class="hidden" id="blog_time_created" name="blog_time_created">
-      Created at - {{ blog_items.time }}
+      <div class="hidden peer-hover:block absolute bg-gray-300 left-0 top-8 p-2 rounded-sm transition-all ease-in"
+        id="blog_time_created" name="blog_time_created">
+        Created at:<br> {{ blog_items.time }}
+      </div>
+      <div class="text-xl font-bold grow text-right" id="blog_title" name="blog_title">
+        {{ blog_items.title }}
+      </div>
     </div>
     <div class="text-right my-auto " id="blog_paragraph_body" name="blog_paragraph_body">
       {{ blog_items.Paragraph_body }}

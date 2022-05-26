@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .sidebar-icon {
-  @apply m-3 bg-gray-300 h-10 w-10 flex justify-center items-center rounded-lg hover:bg-gray-400;
+  @apply m-3 bg-gray-300 h-10 w-10 flex justify-center items-center rounded-lg hover:bg-gray-400 transition-all ease-in;
 }
 
 .blog-btn {
