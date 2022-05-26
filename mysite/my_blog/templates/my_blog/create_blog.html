@@ -1,0 +1,37 @@
+{% extends "my_blog/base.html" %}
+
+{% block title %}create blog{% endblock %}
+
+{% block static %}{% endblock %}
+
+{% block content %}
+<div class="flex justify-center" id="new_blog" name="new_blog">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="h-[500px] w-[700px] p-2 bg-gray-200 shadow rounded-md items-center justify-center" name="main-content">
+      <div class="p-1 text-center font-semibold">
+        <h2>Title:</h2>
+      </div>
+      <div class="p-1 text-center">
+        <input class="w-9/12" name="title" type="text"></input>
+      </div>
+      <div class="p-1 text-center font-semibold">
+        <h2>Paragraph body:</h2>
+      </div>
+      <div class="p-1 text-center ">
+        <textarea class="w-full" name="paragraph_body" type="text"></textarea>
+      </div>
+      <div class="my-1 flex items-center justify-center">
+        <div class="m-2 p-2 bg-gray-100 h-max w-max rounded-sm shadow hover:bg-gray-300">
+          <a href="/">cancel</a>
+        </div>
+        <div class=" my-1 p-2 bg-gray-100 h-max w-max rounded-sm shadow hover:bg-gray-300">
+          <button type="submit" value="newBlog" name="newBlog">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}
