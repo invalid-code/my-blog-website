@@ -11,3 +11,7 @@
 .blog-btn {
   @apply p-1 hover:text-gray-500;
 }
+
+.blog_item {
+  @apply bg-gray-200 p-2 rounded-sm w-64 h-64 shadow;
+}

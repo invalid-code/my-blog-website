@@ -8,7 +8,7 @@
 <div class="flex justify-center" id="new_blog" name="new_blog">
   <form method="POST">
     {% csrf_token %}
-    <div class="h-[500px] w-[700px] p-2 bg-gray-200 shadow rounded-md items-center justify-center" name="main-content">
+    <div class="blog_item items-center xl:lg:h-[500px] xl:lg:w-[700px]" name="main-content">
       <div class="p-1 text-center font-semibold">
         <h2>Title:</h2>
       </div>
@@ -22,7 +22,7 @@
         <textarea class="w-full" name="paragraph_body" type="text"></textarea>
       </div>
       <div class="my-1 flex items-center justify-center">
-        <div class="m-2 p-2 bg-gray-100 h-max w-max rounded-sm shadow hover:bg-gray-300">
+        <div class="m-2 p-2 bg-gray-100 w-max rounded-sm shadow hover:bg-gray-300">
           <a href="/">cancel</a>
         </div>
         <div class=" my-1 p-2 bg-gray-100 h-max w-max rounded-sm shadow hover:bg-gray-300">

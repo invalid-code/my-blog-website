@@ -34,8 +34,10 @@ def index(response):
         blog_structure.append(blog)
     return render(response, "my_blog/index.html", {"blogs": blog_structure})
 
+
 def about_me(response):
     return render(response, "my_blog/about_me.html", {})
+
 
 def blogs(response, blog_id):
     if response.method == "POST":
@@ -49,6 +51,7 @@ def blogs(response, blog_id):
                 collection.update_one({"_id":_id}, blog_updates)
     blog = list(collection.find({"_id":ObjectId(blog_id)}))
     return render(response, "my_blog/blogs.html", {"blog_items": blog[0]})
+
 
 def create_blog(response):
     if response.method == "POST":
@@ -64,3 +67,11 @@ def create_blog(response):
         }
             collection.insert_one(new_blog_form)
     return render(response, "my_blog/create_blog.html", {})
+
+
+def search(response):
+    if response.method == "POST":
+        search_key = response.POST.get("search_bar")
+        if search_key:
+            search_term = list(collection.find({"title": search_key}))
+    return render(response, "my_blog/search.html", {"search_items": search_term})
