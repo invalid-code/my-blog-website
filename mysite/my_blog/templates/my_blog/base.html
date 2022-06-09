@@ -14,77 +14,63 @@
 </head>
 
 <body class="font-Lato bg-gray-50">
-  <div class="" name="top">
-    <nav>
-      <div class="bg-gray-300 p-2 flex items-center">
-        <div class="absolute top-[62px] left-0 w-max bg-gray-200 h-screen" name="left-sidebar">
-          <div class="flex items-center flex-col">
-            <div class="sidebar-icon">
-              <a href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-              </a>
-            </div>
-            <div class="sidebar-icon">
-              <a href="/about-me">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-user">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </a>
-            </div>
+  <div class="relative left-[64px] flex flex-col w-[calc(100%-64px)]">
+    <nav class="bg-gray-300 p-2 flex items-center w-full" name="top">
+      <div class="flex-1" name="logo">
+        <div class="p-1 flex h-items-center rounded-3xl">
+          <!-- <img src="{% static 'favicon.ico' %}" alt="my logo"> -->
+        </div>
+      </div>
+      <div class="w-max p-1 h-max" name="search bar">
+        <form method="POST" action="/search">
+          {% csrf_token %}
+          <div class="flex items-center">
+            <input class="pl-1 w-52 h-9" placeholder="Search..." id="search_bar" name="search_bar"></input>
+            <button class="p-1 h-9 w-9 hover:bg-gray-500 flex justify-center items-center bg-gray-400 transition-all"
+              type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
           </div>
-        </div>
-        <div class="flex-1">
-          <!-- <div class="p-1 flex h-items-center rounded-3xl">
-            <img src="{% static 'favicon.ico' %}" alt="my logo">
-          </div> -->
-        </div>
-        <div class="bg-gray-200 w-max p-1 shadow h-max">
-          <form method="POST">
-            {% csrf_token %}
-            <div class="flex items-center">
-              <input class="mx-1"></input>
-              <div class="p-1">
-                <button type="submit">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+        </form>
       </div>
     </nav>
-  </div>
-  <div class="grid grid-cols-[80%_20%]">
-    <div class="p-2" name="main-content">{% block content %}{% endblock %}</div>
-    <div class="p-2" name="right-sidebar">
-      <div class="w-[100%] border-l-4 border-l-gray-600">
-        <div class="text-center font-bold text-xl">Comments</div>
-        <div class="text-right">
-          <ul>
-            <li>Comment</li>
-            <li class="text-center">
-              <input class="h-7 pl-1" placeholder="comment" type="text"></input>
-            </li>
-          </ul>
-        </div>
+    <div class="grid grid-cols-1 lg:xl:grid-cols-[80%_20%]">
+      <div class="p-2" name="main-content">{% block content %}{% endblock %}</div>
+      <div class="p-2 w-[100%]" name="right-sidebar">
       </div>
     </div>
+    <div class="text-center" name="bottom">
+      <footer>
+        <!-- footer -->
+      </footer>
+    </div>
   </div>
-  <div class="text-center" name="bottom">
-    <footer>
-      <!-- footer -->
-    </footer>
+  <div class="fixed top-0 left-0 w-max bg-gray-200 h-screen" name="left-sidebar">
+    <div class="flex items-center flex-col">
+      <div class="sidebar-icon" name="sidebar-home">
+        <a href="/">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </a>
+      </div>
+      <div class="sidebar-icon" name="sidebar-about_me">
+        <a href="/about-me">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-user">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      </div>
+    </div>
   </div>
   {% block js %}{% endblock %}
 </body>
