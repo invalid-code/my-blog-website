@@ -1,0 +1,11 @@
+1. get a logo
+- fix sidebar icon not clickable in homepage -bug 
+- add search feature
+4. add comment feature
+  * user registration
+    # client side validation
+  * user authentication
+  * ability to comment without user registration
+    # filter which user commented
+    # differentiate between permanent users and temporary users  
+5. make ui cleaner
