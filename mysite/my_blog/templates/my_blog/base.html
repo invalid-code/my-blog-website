@@ -16,16 +16,24 @@
 <body class="font-Lato bg-gray-50">
   <div class="relative left-[64px] flex flex-col w-[calc(100%-64px)]">
     <nav class="bg-gray-300 p-2 flex items-center w-full" name="top">
-      <div class="flex-1" name="logo">
-        <div class="p-1 flex h-items-center rounded-3xl">
-          <!-- <img src="{% static 'favicon.ico' %}" alt="my logo"> -->
-        </div>
+      <div>
+        Current User
+      </div>
+      <div class="flex-1 p-1 flex h-items-center rounded-3xl" name="logo">
+        <!-- <img src="{% static 'favicon.ico' %}" alt="my logo"> -->
       </div>
       <div class="w-max p-1 h-max" name="search bar">
-        <form method="POST" action="/search">
+        <form class="flex items-center" method="POST" action="/search/">
           {% csrf_token %}
+          <a href="/sign-up" class="p-2 font-bold hover:text-gray-50 transition">
+            Sign-up
+          </a>
+          <a href="/sign-in" class="p-2 font-bold hover:text-gray-50 transition">
+            Sign-in
+          </a>
           <div class="flex items-center">
-            <input class="pl-1 w-52 h-9" placeholder="Search..." id="search_bar" name="search_bar"></input>
+            <input class="pl-1 w-52 h-9 placeholder:text-slate-400 placeholder:italic" placeholder="Search..."
+              id="search_bar" name="search_bar"></input>
             <button class="p-1 h-9 w-9 hover:bg-gray-500 flex justify-center items-center bg-gray-400 transition-all"
               type="submit">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -38,10 +46,13 @@
         </form>
       </div>
     </nav>
+    <div>
+      {% block messages_block %}
+      {% endblock %}
+    </div>
     <div class="grid grid-cols-1 lg:xl:grid-cols-[80%_20%]">
       <div class="p-2" name="main-content">{% block content %}{% endblock %}</div>
-      <div class="p-2 w-[100%]" name="right-sidebar">
-      </div>
+      {% block right_sidebar %}{% endblock %}
     </div>
     <div class="text-center" name="bottom">
       <footer>

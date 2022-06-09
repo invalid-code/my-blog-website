@@ -15,3 +15,17 @@
 .blog_item {
   @apply bg-gray-200 p-2 rounded-sm w-64 h-64 shadow;
 }
+
+.register-label {
+  @apply m-1 text-right after:content-['*'] after:text-red-500 after:text-xl;
+}
+
+/* .register-input {
+  @apply placeholder:italic placeholder:text-slate-400
+  required:invalid:border-red-500 invalid:border-2 
+  focus:outline-hidden focus:outline-0 focus:outline-transparent;
+} */
+
+.register-submit-btn {
+  @apply p-1 w-max hover:text-gray-100 transition;
+}

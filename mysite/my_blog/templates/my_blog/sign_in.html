@@ -1,0 +1,36 @@
+{% extends "my_blog/base.html" %}
+
+{% block title %}sign in{% endblock %}
+
+{% block static_files %}{% endblock %}
+
+{% block messages_block %}
+      {% if messages %}
+      <div>
+        {% for message in messages %}
+          <div class="">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="flex justify-center">
+  <form class="flex flex-col bg-gray-200 w-[30rem] p-4 m-2 rounded-2xl shadow" method="POST">
+    {% csrf_token %}
+    <div class="grid grid-cols-[max-content_1fr] gap-4 m-2">
+      <label class="register-label">Username</label>
+      <input type="text" name="user_username" id="user_username" {% if authenticate_user %}value="{{ authenticate_user }}{% endif %}" required>
+      <label class="register-label">Password</label>
+      <input type="password" name="user_password" id="user_password" required>
+    </div>
+    <div class="flex justify-center">
+      <button class="register-submit-btn" type="submit" name="user_login" id="user_login" value="user_login">Log in</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}
