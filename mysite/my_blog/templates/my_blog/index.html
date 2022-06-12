@@ -8,6 +8,18 @@
 {% load static %}
 {% endblock %}
 
+
+{% block user_links %}
+  {% if not authenticated_user.user_is_authenticated %}
+    <a href="/sign-up" class="user-links">Sign-up</a>
+    <a href="/sign-in" class="user-links">Sign-in</a>
+  {% else %}
+    <form method="POST" action="/">
+      <button class="user-links" type="submit" name="logout_btn" id="logout_btn" value="logout_btn">Logout</button>
+    </form>
+  {% endif %}
+{% endblock %}
+
 {% block messages_block %}
   <div>
     {% if messages %}
@@ -58,18 +70,12 @@
       {{ comment.comment }}
     </div>
     <hr class="m-2 w-full text-2xl">
-    <!-- <div>
-      user
-    </div>
-    <div>
-      comment
-    </div> -->
     {% endfor %}
   </div>
   <div class="text-center">
     <form method="POST" action="/">
       {% csrf_token %}
-      <input class="hidden" type="text" name="comment_user" id="comment_user">
+      <input class="hidden" type="text" name="comment_user" id="comment_user" {% if authenticated_user.user_is_authenticated %}value="{{ authenticated_user.user_username }}"{% endif %}>    
       <input type="text" name="comment_input" id="comment_input">
       <button class="m-2 hover:text-gray-300 transition" type="submit" id="comment_submit_button"
         name="comment_submit_button" value="comment_submit_button">Comment</button>

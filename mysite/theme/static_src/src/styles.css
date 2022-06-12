@@ -29,3 +29,7 @@
 .register-submit-btn {
   @apply p-1 w-max hover:text-gray-100 transition;
 }
+
+.user-links {
+  @apply p-2 font-bold hover:text-gray-50 transition;
+}

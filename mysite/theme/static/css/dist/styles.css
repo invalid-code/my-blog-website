@@ -715,16 +715,16 @@ select{
   right: 2rem;
 }
 
-.m-auto{
-  margin: auto;
+.m-4{
+  margin: 1rem;
 }
 
 .m-2{
   margin: 0.5rem;
 }
 
-.m-4{
-  margin: 1rem;
+.m-auto{
+  margin: auto;
 }
 
 .mx-auto{
@@ -780,12 +780,16 @@ select{
   height: 16rem;
 }
 
-.w-\[calc\(100\%-64px\)\]{
-  width: calc(100% - 64px);
+.w-\[100\%\]{
+  width: 100%;
 }
 
 .w-full{
   width: 100%;
+}
+
+.w-\[calc\(100\%-64px\)\]{
+  width: calc(100% - 64px);
 }
 
 .w-max{
@@ -812,10 +816,6 @@ select{
 
 .w-\[35px\]{
   width: 35px;
-}
-
-.w-\[100\%\]{
-  width: 100%;
 }
 
 .w-\[30rem\]{
@@ -1075,6 +1075,21 @@ select{
   color: rgb(243 244 246 / var(--tw-text-opacity));
 }
 
+.user-links{
+  padding: 0.5rem;
+  font-weight: 700;
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.user-links:hover{
+  --tw-text-opacity: 1;
+  color: rgb(249 250 251 / var(--tw-text-opacity));
+}
+
 .placeholder\:italic::-moz-placeholder{
   font-style: italic;
 }
@@ -1116,11 +1131,6 @@ select{
 .hover\:bg-gray-300:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
-}
-
-.hover\:text-gray-50:hover{
-  --tw-text-opacity: 1;
-  color: rgb(249 250 251 / var(--tw-text-opacity));
 }
 
 .hover\:text-gray-300:hover{
