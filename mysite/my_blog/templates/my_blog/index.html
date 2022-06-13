@@ -4,31 +4,7 @@
 
 {% block title %}my blog{% endblock %}
 
-{% block static_files %}
-{% load static %}
-{% endblock %}
-
-
-{% block user_links %}
-  {% if not authenticated_user.user_is_authenticated %}
-    <a href="/sign-up" class="user-links">Sign-up</a>
-    <a href="/sign-in" class="user-links">Sign-in</a>
-  {% else %}
-    <form method="POST" action="/">
-      <button class="user-links" type="submit" name="logout_btn" id="logout_btn" value="logout_btn">Logout</button>
-    </form>
-  {% endif %}
-{% endblock %}
-
-{% block messages_block %}
-  <div>
-    {% if messages %}
-      {% for message in messages %}
-        <div>{{ message }}</div>
-      {% endfor %}
-    {% endif %}
-  </div>
-{% endblock %}
+{% block static_files %}{% load static %}{% endblock %}
 
 {% block content %}
 <div class="flex justify-center relative">

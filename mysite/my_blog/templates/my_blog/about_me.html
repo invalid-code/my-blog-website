@@ -4,47 +4,26 @@
 
 {% block static_files %}{% endblock %}
 
-{% block logged_in_user %}
-  {% if authenticated_user.user_is_authenticated %}
-    {{ authenticated_user.user_username }}
-  {% endif %}
-{% endblock %}
-
-{% block user_links %}
-  {% if not authenticated_user.user_is_authenticated %}
-    <a href="/sign-up" class="user-links">Sign-up</a>
-    <a href="/sign-in" class="user-links">Sign-in</a>
-  {% else %}
-    <form method="POST" action="/">
-      <button class="user-links" type="submit" name="logout_btn" id="logout_btn" value="logout_btn">Logout</button>
-    </form>
-  {% endif %}
-{% endblock %}
-
-{% block messages_block %}{% endblock %}
-
 {% block content %}
-<div name="main">
-  <header class="text-right">
-    <h1>Hello my name is, Jess Mathew P. Evangelista</h1>
-    <p>
-      I'm a junior full stacked python web developer and I use Django framework to<br>build serverside web apps together with vue.js as my frontend web framework
-    </p>
-  </header>
-</div>
+  <div name="main">
+    <header class="text-right">
+      <h1>Hello my name is, Jess Mathew P. Evangelista</h1>
+      <p>
+        I'm a junior full stacked python web developer and I use Django framework to<br>build serverside web apps together with vue.js as my frontend web framework
+      </p>
+    </header>
+  </div>
 {% endblock %}
 
 {% block right_sidebar %}
     <div class="p-2 w-[100%] border-l-4 border-gray-500 h-max mt-2" name="right-sidebar">
-      <div class="text-center text-xl font-bold">
-        Comments
-      </div>
+      <div class="text-center text-xl font-bold">Comments</div>
       <div class="text-right m-4">
         {% for comment in comments %}
-        <div>
-          {{ comment.comment }}
-        </div>
-        <hr class="m-2 w-full text-2xl">
+          <div>
+            {{ comment.comment }}
+          </div>
+          <hr class="m-2 w-full text-2xl">
         {% endfor %}
       </div>
       <div class="text-center">

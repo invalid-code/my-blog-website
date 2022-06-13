@@ -5,7 +5,9 @@ from datetime import datetime
 from bson.objectid import ObjectId
 from .models import blog_collection, user_collection, user_comments
 
-user_counter = 0
+class GlobalValues:
+    user_counter = 0
+    b = {"user_username": "", "user_is_authenticated": False}
 
 
 def comment(user_comment, commenter):
@@ -13,10 +15,13 @@ def comment(user_comment, commenter):
         comment_content = {"comment": user_comment, "user": commenter}
         user_comments.insert_one(comment_content)
     else:
+        # comment_content = {"comment": user_comment, "user": ""}
+        # user_comments.insert_one(comment_content)
         pass
 
 # Create your views here.
 def index(response):
+    anom_username = f"user{GlobalValues.user_counter}"
     if response.method == "POST":
         submit_comment = response.POST.get("comment_submit_button")
         user_comment = response.POST.get("comment_input")
@@ -25,7 +30,7 @@ def index(response):
         if submit_comment:
             comment(user_comment=user_comment, commenter=commenter)
         if logout_user:
-            pass
+            response.session["user_information"] = GlobalValues.b          
     authenticated_user = response.session.get("user_information")
     blogs = list(blog_collection.find())
     comments = list(user_comments.find())
@@ -40,7 +45,9 @@ def about_me(response):
         logout_user = response.POST.get("logout_btn")
         if submit_comment:
             comment(user_comment=user_comment, commenter=commenter)
-    authenticated_user = response.session.get("user_information")
+        if logout_user:
+            response.session["user_information"] = GlobalValues.b
+    authenticated_user = response.session.get("user_information")    
     comments = list(user_comments.find())
     return render(response, "my_blog/about_me.html", {"comments": comments, "authenticated_user": authenticated_user})
 
@@ -50,13 +57,18 @@ def blogs(response, blog_id):
         save_blog = response.POST.get("save_blog")
         edit_blog_paragraph = response.POST.get("blog_paragraph_body")
         edit_blog_title = response.POST.get("blog_title")
+        logout_user = response.POST.get("logout_btn")
         if save_blog:
             if edit_blog_paragraph and edit_blog_title:
                 blog_updates = {"$set": {"title": edit_blog_title,
                                          "Paragraph_body": edit_blog_paragraph}}
                 blog_collection.update_one(_id, blog_updates)
+        if logout_user:
+            b = {"user_username": "", "user_is_authenticated": False}
+            response.session["user_information"] = GlobalValues.b
+    authenticated_user = response.session.get("user_information")
     found_blog = list(blog_collection.find(_id))
-    return render(response, "my_blog/blogs.html", {"blog_items": found_blog[0]})
+    return render(response, "my_blog/blogs.html", {"blog_items": found_blog[0], "authenticated_user": authenticated_user})
 
 def create_blog(response):
     if response.method == "POST":
@@ -64,6 +76,7 @@ def create_blog(response):
         blog_title = response.POST.get("title")
         new_blog = response.POST.get("newBlog")
         current_time = datetime.now()
+        logout_user = response.POST.get("logout_btn")
         if new_blog:
             new_blog_form = {
                 "title": blog_title,
@@ -71,15 +84,19 @@ def create_blog(response):
                 "Paragraph_body": blog_body,
             }
             blog_collection.insert_one(new_blog_form)
-            query_blog = {"title": blog_title, "Paragraph_body": blog_body}
-            blog_id = list(blog_collection.find(query_blog)).index(0).get("_id")
-            return redirect(f"blogs/{blog_id}/")
-    return render(response, "my_blog/create_blog.html", {})
+            blog_id = list(blog_collection.find(new_blog_form))[0].get("_id")
+            return redirect(f"/blogs/{blog_id}")
+        if logout_user:
+            b = {"user_username": "", "user_is_authenticated": False}
+            response.session["user_information"] = GlobalValues.b
+    authenticated_user = response.session.get("user_information")
+    return render(response, "my_blog/create_blog.html", {"authenticated_user": authenticated_user})
 
 def search(response):
     search_result = None
     if response.method == "POST":
         search_key = response.POST.get("search_bar")
+        logout_user = response.POST.get("logout_btn")
         if search_key:
             # query_term = {"title": search_key}
             # search_result = list(blog_collection.find(query_term))
@@ -87,16 +104,19 @@ def search(response):
             if len(search_result) == 1:
                 blog_id = search_result[0].get("_id")
                 return redirect(f"/blogs/{blog_id}/")
-    return render(response, "my_blog/search.html", {"search_items": search_result})
+        if logout_user:
+            response.session["user_information"] = GlobalValues.b
+    authenticated_user = response.session.get("user_information")
+    return render(response, "my_blog/search.html", {"search_items": search_result, "authenticated_user": authenticated_user})
 
 def sign_up(response):
-    global user_counter
+    t = GlobalValues.user_counter
     if response.method == "POST":
         username = response.POST.get("user_username")
         password = response.POST.get("user_password")
         register = response.POST.get("user_submit_btn")
         if register:
-            user_counter += 1
+            t += 1
             new_user = {
                 "username": username,
                 "password": make_password(password, salt=None, hasher="default"),

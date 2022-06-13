@@ -29,7 +29,8 @@
           <a href="/sign-up" class="user-links">Sign-up</a>
           <a href="/sign-in" class="user-links">Sign-in</a>
         {% else %}
-          <form method="POST" action="/">
+          <form method="POST">
+            {% csrf_token %}
             <button class="user-links" type="submit" name="logout_btn" id="logout_btn" value="logout_btn">Logout</button>
           </form>
         {% endif %}
@@ -51,7 +52,11 @@
       </div>
     </nav>
     <div>
-      {% block messages_block %}{% endblock %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="text-center p-2 bg-gray-200 flex w-[90%] rounded-b-xl" name="flash_messages" id="flash_messages">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
     </div>
     <div class="grid grid-cols-1 lg:xl:grid-cols-[80%_20%]">
       <div class="p-2" name="main-content">{% block content %}{% endblock %}</div>
@@ -86,6 +91,7 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="{% static "flash_messages.js" %}"></script>
   {% block js %}{% endblock %}
 </body>
 
