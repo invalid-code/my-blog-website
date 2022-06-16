@@ -5,32 +5,42 @@ from datetime import datetime
 from bson.objectid import ObjectId
 from .models import blog_collection, user_collection, user_comments
 
-class GlobalValues:
+
+class Globals:
     user_counter = 0
     b = {"user_username": "", "user_is_authenticated": False}
 
+    @staticmethod
+    def logout_user(user):
+        user = list(user_collection.find({"username": user}))[0]
+        Globals.b.update({"user_username": user.get("username"), "user_is_authenticated": False})
+        user_collection.update_one({"_id": ObjectId(user.get("_id"))}, {"$set": {"logged_in": False}})
 
-def comment(user_comment, commenter):
-    if commenter:
-        comment_content = {"comment": user_comment, "user": commenter}
-        user_comments.insert_one(comment_content)
-    else:
-        # comment_content = {"comment": user_comment, "user": ""}
-        # user_comments.insert_one(comment_content)
-        pass
+    @staticmethod
+    def comment(user_comment, commenter):
+        if commenter:
+            comment_content = {"comment": user_comment, "user": commenter}
+            user_comments.insert_one(comment_content)
+
 
 # Create your views here.
 def index(response):
-    anom_username = f"user{GlobalValues.user_counter}"
+    authenticated_user = response.session.get("user_information")
+    user_username = authenticated_user.get("user_username")
+    if not user_username:
+        Globals.user_counter += 1
+        Globals.b.update({"user_username": f"user{Globals.user_counter}"})
+        response.session["user_information"] = Globals.b
     if response.method == "POST":
         submit_comment = response.POST.get("comment_submit_button")
         user_comment = response.POST.get("comment_input")
         commenter = response.POST.get("comment_user")
         logout_user = response.POST.get("logout_btn")
         if submit_comment:
-            comment(user_comment=user_comment, commenter=commenter)
+            Globals.comment(user_comment, commenter)
         if logout_user:
-            response.session["user_information"] = GlobalValues.b          
+            Globals.logout_user(user_username)
+            response.session["user_information"] = Globals.b
     authenticated_user = response.session.get("user_information")
     blogs = list(blog_collection.find())
     comments = list(user_comments.find())
@@ -38,15 +48,17 @@ def index(response):
 
 
 def about_me(response):
+    authenticated_user = response.session.get("user_information")
     if response.method == "POST":
         submit_comment = response.POST.get("comment_submit_button")
         user_comment = response.POST.get("comment_input")
         commenter = response.POST.get("comment_user")
         logout_user = response.POST.get("logout_btn")
         if submit_comment:
-            comment(user_comment=user_comment, commenter=commenter)
+            Globals.comment(user_comment, commenter)
         if logout_user:
-            response.session["user_information"] = GlobalValues.b
+            Globals.logout_user(authenticated_user.get("user_username"))
+            response.session["user_information"] = Globals.b
     authenticated_user = response.session.get("user_information")    
     comments = list(user_comments.find())
     return render(response, "my_blog/about_me.html", {"comments": comments, "authenticated_user": authenticated_user})
@@ -60,12 +72,12 @@ def blogs(response, blog_id):
         logout_user = response.POST.get("logout_btn")
         if save_blog:
             if edit_blog_paragraph and edit_blog_title:
-                blog_updates = {"$set": {"title": edit_blog_title,
-                                         "Paragraph_body": edit_blog_paragraph}}
+                blog_updates = {"$set": {"title": edit_blog_title, "Paragraph_body": edit_blog_paragraph}}
                 blog_collection.update_one(_id, blog_updates)
         if logout_user:
-            b = {"user_username": "", "user_is_authenticated": False}
-            response.session["user_information"] = GlobalValues.b
+            authenticated_user = response.session.get("user_information")
+            Globals.logout_user(authenticated_user.get("user_username"))
+            response.session["user_information"] = Globals.b
     authenticated_user = response.session.get("user_information")
     found_blog = list(blog_collection.find(_id))
     return render(response, "my_blog/blogs.html", {"blog_items": found_blog[0], "authenticated_user": authenticated_user})
@@ -84,11 +96,11 @@ def create_blog(response):
                 "Paragraph_body": blog_body,
             }
             blog_collection.insert_one(new_blog_form)
-            blog_id = list(blog_collection.find(new_blog_form))[0].get("_id")
-            return redirect(f"/blogs/{blog_id}")
+            return redirect(f"/blogs/{list(blog_collection.find(new_blog_form))[0].get('_id')}")
         if logout_user:
-            b = {"user_username": "", "user_is_authenticated": False}
-            response.session["user_information"] = GlobalValues.b
+            authenticated_user = response.session.get("user_information")
+            Globals.logout_user(authenticated_user.get("user_username"))
+            response.session["user_information"] = Globals.b
     authenticated_user = response.session.get("user_information")
     return render(response, "my_blog/create_blog.html", {"authenticated_user": authenticated_user})
 
@@ -102,27 +114,32 @@ def search(response):
             # search_result = list(blog_collection.find(query_term))
             search_result = list(blog_collection.aggregate([{"$search": {"index": "blog_search_index", "text": {"query": search_key, "path": {"wildcard": "*"}}}}]))
             if len(search_result) == 1:
-                blog_id = search_result[0].get("_id")
-                return redirect(f"/blogs/{blog_id}/")
+                return redirect(f"/blogs/{search_result[0].get('_id')}/")
         if logout_user:
-            response.session["user_information"] = GlobalValues.b
+            authenticated_user = response.session.get("user_information")
+            Globals.logout_user(authenticated_user.get("user_username"))
+            response.session["user_information"] = Globals.b
     authenticated_user = response.session.get("user_information")
     return render(response, "my_blog/search.html", {"search_items": search_result, "authenticated_user": authenticated_user})
 
 def sign_up(response):
-    t = GlobalValues.user_counter
+    anon_user = response.session.get("user_information")
     if response.method == "POST":
         username = response.POST.get("user_username")
         password = response.POST.get("user_password")
         register = response.POST.get("user_submit_btn")
         if register:
-            t += 1
             new_user = {
                 "username": username,
                 "password": make_password(password, salt=None, hasher="default"),
-                "user_count": user_counter,
+                "user_count": Globals.user_counter,
             }
             user_collection.insert_one(new_user)
+            anonymous_user_comments = user_comments.find({"user": anon_user.get("user_username")})
+            for comments in anonymous_user_comments:
+                _id = {"_id": ObjectId(comments.get("_id"))}
+                new_user_comments = {"$set": {"user": username}}
+                user_comments.update_one(_id, new_user_comments)
             return redirect(f"/sign-in?username={username}")
     return render(response, "my_blog/sign_up.html")
 
@@ -141,8 +158,8 @@ def sign_in(response):
                     user_id = query_user[0].get("_id")
                     login_user = {"$set": {"logged_in": True}}
                     user_collection.update_one({"_id": user_id}, login_user)
-                    a = {"user_username": username, "user_is_authenticated": True}
-                    response.session["user_information"] = a
+                    Globals.b.update({"user_is_authenticated": True})
+                    response.session["user_information"] = Globals.b
                     messages.success(response, f"{username} is now logged in! Have a nice day.")
                     return redirect("/")
                 else:

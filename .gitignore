@@ -6,3 +6,4 @@ mysite/theme/__pycache__
 mysite/my_blog/templatetags/__pycache__
 mysite/theme/static_src/node_modules
 mysite/db.sqlite3
+todo.txt
