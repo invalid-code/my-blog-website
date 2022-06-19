@@ -6,21 +6,27 @@
 {% block static %}{% endblock %}
 
 {% block content %}
-<div class="flex justify-center">
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  <div class="flex justify-center">
+    {% if search_items %}
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {% for search_item in search_items %}
-        <a class="h-64 w-64 md:h-56 md:w-56 lg:xl:h-48 lg:xl:w-48 p-2 bg-gray-200 hover:scale-105 hover:shadow-md shadow rounded-sm transition-all"
+          <a class="h-64 w-64 md:h-56 md:w-56 lg:xl:h-48 lg:xl:w-48 p-2 bg-gray-200 hover:scale-105 hover:shadow-md shadow rounded-sm transition-all"
             href="blogs/{% mongo_id search_item %}">
             <div class="text-right">
-                <div class="text-xl font-bold" id="blog_title" name="blog_title">{{ search_item.title.capitalize }}
-                </div>
+              <div class="text-xl font-bold" id="blog_title" name="blog_title">{{ search_item.title.capitalize }}
+              </div>
             </div>
             <div class="text-right" id="blog_paragraph_body" name="blog_paragraph_body">{{ search_item.Paragraph_body }}
             </div>
-        </a>
+          </a>
         {% endfor %}
-    </div>
-</div>
+      </div>
+    {% else %}
+      <div>
+        Nothing
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}
 
 {% block js %}{% endblock %}

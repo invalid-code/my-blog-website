@@ -1,16 +1,41 @@
 {% extends "my_blog/base.html" %}
+
 {% block title %}about-me{% endblock %}
+
 {% block static_files %}{% endblock %}
+
 {% block content %}
-<div name=" main">
+  <div name="main">
     <header class="text-right">
-        <h1>
-            Hello my name is, Jess Mathew P. Evangelista
-        </h1>
-        <p>
-            I'm a junior full stacked python web developer and I use Django framework to<br>build serverside web
-            apps together with vue.js as my frontend web framework
-        </p>
+      <h1>Hello my name is, Jess Mathew P. Evangelista</h1>
+      <p>
+        I'm a junior full stacked python web developer and I use Django framework to<br>build serverside web apps together with vue.js as my frontend web framework
+      </p>
     </header>
-</div>
+  </div>
 {% endblock %}
+
+{% block right_sidebar %}
+    <div class="p-2 w-[100%] border-l-4 border-gray-500 h-max mt-2" name="right-sidebar">
+      <div class="text-center text-xl font-bold">Comments</div>
+      <div class="text-right m-4">
+        {% for comment in comments %}
+          <div>
+            {{ comment.comment }}
+          </div>
+          <hr class="m-2 w-full text-2xl">
+        {% endfor %}
+      </div>
+      <div class="text-center">
+        <form method="POST" action="/about-me/">
+          {% csrf_token %}
+          <input class="hidden" type="text" name="comment_user" id="comment_user" {% if authenticated_user.user_is_authenticated %}value="{{ authenticated_user.user_username }}"{% endif %}>    
+          <input type="text" name="comment_input" id="comment_input">
+          <button class="m-2 hover:text-gray-300 transition" type="submit" id="comment_submit_button"
+            name="comment_submit_button" value="comment_submit_button">Comment</button>
+        </form>
+      </div>
+    </div>
+{% endblock %}
+
+{% block js %}{% endblock %}

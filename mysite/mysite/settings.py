@@ -79,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -129,8 +128,8 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "my_blog\static\my_blog"),
-    os.path.join(BASE_DIR, "theme\static\css\dist"),
+    os.path.join(BASE_DIR, "my_blog\\static\\my_blog"),
+    os.path.join(BASE_DIR, "theme\\static\\css\\dist"),
 ]
 
 # Default primary key field type

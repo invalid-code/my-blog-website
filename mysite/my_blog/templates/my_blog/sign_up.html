@@ -1,0 +1,29 @@
+{% extends "my_blog/base.html" %}
+
+{% block title%}create new user{% endblock %}
+
+{% block static_files %}{% endblock %}
+
+{% block content %}
+<div class="flex justify-center">
+  <form class="flex flex-col justify-center bg-gray-200 w-[30rem] p-4 m-2 rounded-2xl shadow" method="POST">
+    {% csrf_token %}
+    <div class="grid grid-cols-[max-content_1fr] gap-4 m-2">
+      <label class="register-label">Username</label>
+      <input class="register-input" type="text" placeholder="Username" name="user_username" id="user_username"
+        minlength="2" maxlength="100" required>
+      <label class="register-label">Password</label>
+      <input class="register-input" type="password" placeholder="Password" name="user_password" id="user_password"
+        minlength="8" maxlength="30" required>
+      <label class="register-label">Confirm Password</label>
+      <input class="register-input" type="password" placeholder="Re-confirm password" name="user_password_2"
+        id="user_password_2" minlength="8" maxlength="30" required>
+    </div>
+    <div class="flex justify-center">
+      <button class="register-submit-btn" value="user_submit_btn" type="submit" name="user_submit_btn" id="user_submit_btn">Submit</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block js %}{% endblock %}

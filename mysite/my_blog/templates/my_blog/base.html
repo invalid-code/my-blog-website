@@ -16,16 +16,29 @@
 <body class="font-Lato bg-gray-50">
   <div class="relative left-[64px] flex flex-col w-[calc(100%-64px)]">
     <nav class="bg-gray-300 p-2 flex items-center w-full" name="top">
-      <div class="flex-1" name="logo">
-        <div class="p-1 flex h-items-center rounded-3xl">
-          <!-- <img src="{% static 'favicon.ico' %}" alt="my logo"> -->
-        </div>
+      <div>
+        {% if authenticated_user.user_is_authenticated %}
+          {{ authenticated_user.user_username }}
+        {% endif %}
       </div>
-      <div class="w-max p-1 h-max" name="search bar">
-        <form method="POST" action="/search">
+      <div class="flex-1 p-1 flex h-items-center rounded-3xl" name="logo">
+        <!-- <img src="{#% static 'favicon.ico' %}" alt="my logo"> -->
+      </div>
+      <div class="w-max p-1 h-max flex items-center" name="search bar">
+        {% if not authenticated_user.user_is_authenticated %}
+          <a href="/sign-up" class="user-links">Sign-up</a>
+          <a href="/sign-in" class="user-links">Sign-in</a>
+        {% else %}
+          <form method="POST">
+            {% csrf_token %}
+            <button class="user-links" type="submit" name="logout_btn" id="logout_btn" value="logout_btn">Logout</button>
+          </form>
+        {% endif %}
+        <form method="POST" action="/search/">
           {% csrf_token %}
           <div class="flex items-center">
-            <input class="pl-1 w-52 h-9" placeholder="Search..." id="search_bar" name="search_bar"></input>
+            <input class="pl-1 w-52 h-9 placeholder:text-slate-400 placeholder:italic" placeholder="Search..."
+              id="search_bar" name="search_bar"></input>
             <button class="p-1 h-9 w-9 hover:bg-gray-500 flex justify-center items-center bg-gray-400 transition-all"
               type="submit">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -38,10 +51,16 @@
         </form>
       </div>
     </nav>
+    <div>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="text-center p-2 bg-gray-200 flex w-[90%] rounded-b-xl" name="flash_messages" id="flash_messages">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
     <div class="grid grid-cols-1 lg:xl:grid-cols-[80%_20%]">
       <div class="p-2" name="main-content">{% block content %}{% endblock %}</div>
-      <div class="p-2 w-[100%]" name="right-sidebar">
-      </div>
+      {% block right_sidebar %}{% endblock %}
     </div>
     <div class="text-center" name="bottom">
       <footer>
@@ -72,6 +91,7 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="{% static "flash_messages.js" %}"></script>
   {% block js %}{% endblock %}
 </body>
 
