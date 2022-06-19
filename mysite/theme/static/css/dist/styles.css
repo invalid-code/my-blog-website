@@ -727,10 +727,6 @@ select{
   margin: auto;
 }
 
-.m-5{
-  margin: 1.25rem;
-}
-
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
@@ -784,6 +780,10 @@ select{
   height: 16rem;
 }
 
+.h-36{
+  height: 9rem;
+}
+
 .w-\[100\%\]{
   width: 100%;
 }
@@ -810,6 +810,10 @@ select{
   width: 2.25rem;
 }
 
+.w-\[95\%\]{
+  width: 95%;
+}
+
 .w-64{
   width: 16rem;
 }
@@ -824,10 +828,6 @@ select{
 
 .w-\[30rem\]{
   width: 30rem;
-}
-
-.w-\[90\%\]{
-  width: 90%;
 }
 
 .flex-1{
@@ -916,21 +916,6 @@ select{
 .bg-gray-100{
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
-.bg-sky-300{
-  --tw-bg-opacity: 1;
-  background-color: rgb(125 211 252 / var(--tw-bg-opacity));
-}
-
-.bg-sky-100{
-  --tw-bg-opacity: 1;
-  background-color: rgb(224 242 254 / var(--tw-bg-opacity));
-}
-
-.bg-sky-200{
-  --tw-bg-opacity: 1;
-  background-color: rgb(186 230 253 / var(--tw-bg-opacity));
 }
 
 .p-2{
@@ -1170,6 +1155,14 @@ select{
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.group:hover .group-hover\:block{
+  display: block;
+}
+
+.group:hover .group-hover\:hidden{
+  display: none;
 }
 
 .peer:hover ~ .peer-hover\:block{

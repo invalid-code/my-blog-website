@@ -5,6 +5,7 @@
 {% block static_files %}{% endblock %}
 
 {% block content %}
+  <div class="p-2 grid grid-cols-1 lg:xl:grid-cols-[80%_20%]">
   <div name="main">
     <header class="text-right">
       <h1>Hello my name is, Jess Mathew P. Evangelista</h1>
@@ -13,10 +14,7 @@
       </p>
     </header>
   </div>
-{% endblock %}
-
-{% block right_sidebar %}
-    <div class="p-2 w-[100%] border-l-4 border-gray-500 h-max mt-2" name="right-sidebar">
+  <div class="p-2 w-[100%] border-l-4 border-gray-500 h-max mt-2" name="right-sidebar">
       <div class="text-center text-xl font-bold">Comments</div>
       <div class="text-right m-4">
         {% for comment in comments %}
@@ -36,6 +34,11 @@
         </form>
       </div>
     </div>
+  </div>
+{% endblock %}
+
+{% block right_sidebar %}
+    
 {% endblock %}
 
 {% block js %}{% endblock %}

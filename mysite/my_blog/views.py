@@ -12,6 +12,7 @@ class Globals:
 
     @staticmethod
     def logout_user(user):
+        # print(user)
         user = list(user_collection.find({"username": user}))[0]
         Globals.b.update({"user_username": user.get("username"), "user_is_authenticated": False})
         user_collection.update_one({"_id": ObjectId(user.get("_id"))}, {"$set": {"logged_in": False}})
@@ -22,15 +23,24 @@ class Globals:
             comment_content = {"comment": user_comment, "user": commenter}
             user_comments.insert_one(comment_content)
 
+    @staticmethod
+    def add_user_counter():
+        Globals.user_counter += 1
+
 
 # Create your views here.
 def index(response):
+    owner = list(user_collection.find({"username": "jess"}))[0]
     authenticated_user = response.session.get("user_information")
-    user_username = authenticated_user.get("user_username")
-    if not user_username:
-        Globals.user_counter += 1
-        Globals.b.update({"user_username": f"user{Globals.user_counter}"})
+    if not authenticated_user:
         response.session["user_information"] = Globals.b
+        authenticated_user = response.session.get("user_information")
+        user_username = authenticated_user.get("user_username")
+        if not user_username:
+            Globals.add_user_counter()
+            Globals.b.update({"user_username": f"user{Globals.user_counter}"})
+            response.session["user_information"] = Globals.b
+    user_username = authenticated_user.get("user_username")
     if response.method == "POST":
         submit_comment = response.POST.get("comment_submit_button")
         user_comment = response.POST.get("comment_input")
@@ -40,11 +50,12 @@ def index(response):
             Globals.comment(user_comment, commenter)
         if logout_user:
             Globals.logout_user(user_username)
+            messages.success(response, f"{user_username} is now logged out")
             response.session["user_information"] = Globals.b
     authenticated_user = response.session.get("user_information")
     blogs = list(blog_collection.find())
     comments = list(user_comments.find())
-    return render(response, "my_blog/index.html", {"blogs": blogs, "authenticated_user": authenticated_user, "comments": comments})
+    return render(response, "my_blog/index.html", {"blogs": blogs, "authenticated_user": authenticated_user, "comments": comments, "admin": owner})
 
 
 def about_me(response):
@@ -79,8 +90,9 @@ def blogs(response, blog_id):
             Globals.logout_user(authenticated_user.get("user_username"))
             response.session["user_information"] = Globals.b
     authenticated_user = response.session.get("user_information")
+    comments = list(user_comments.find())
     found_blog = list(blog_collection.find(_id))
-    return render(response, "my_blog/blogs.html", {"blog_items": found_blog[0], "authenticated_user": authenticated_user})
+    return render(response, "my_blog/blogs.html", {"comments": comments, "blog_items": found_blog[0], "authenticated_user": authenticated_user})
 
 def create_blog(response):
     if response.method == "POST":
@@ -127,20 +139,30 @@ def sign_up(response):
     if response.method == "POST":
         username = response.POST.get("user_username")
         password = response.POST.get("user_password")
+        password2 = response.POST.get("user_password_2")
         register = response.POST.get("user_submit_btn")
         if register:
-            new_user = {
-                "username": username,
-                "password": make_password(password, salt=None, hasher="default"),
-                "user_count": Globals.user_counter,
-            }
-            user_collection.insert_one(new_user)
-            anonymous_user_comments = user_comments.find({"user": anon_user.get("user_username")})
-            for comments in anonymous_user_comments:
-                _id = {"_id": ObjectId(comments.get("_id"))}
-                new_user_comments = {"$set": {"user": username}}
-                user_comments.update_one(_id, new_user_comments)
-            return redirect(f"/sign-in?username={username}")
+            user_already_exists = list(user_collection.find({"username": username}))
+            if not user_already_exists:
+                if password == password2:
+                    Globals.add_user_counter()
+                    new_user = {
+                        "username": username,
+                        "password": make_password(password, salt=None, hasher="default"),
+                        "user_count": Globals.user_counter,
+                    }
+                    user_collection.insert_one(new_user)
+                    messages.success(response, f"{username} is now registered!")
+                    anonymous_user_comments = user_comments.find({"user": anon_user.get("user_username")})
+                    for comments in anonymous_user_comments:
+                        _id = {"_id": ObjectId(comments.get("_id"))}
+                        new_user_comments = {"$set": {"user": username}}
+                        user_comments.update_one(_id, new_user_comments)
+                    return redirect(f"/sign-in?username={username}")
+                else:
+                    messages.error(response, "password1 did not match password2")
+            else:
+                messages.error(response, "username is taken")             
     return render(response, "my_blog/sign_up.html")
 
 def sign_in(response):
@@ -153,12 +175,13 @@ def sign_in(response):
         if login:
             if u:
                 user = u[0]
+                print(make_password(password), user["password"])
                 if username == user["username"] and check_password(password, user["password"]):
                     query_user = list(user_collection.find({"username": username}))
                     user_id = query_user[0].get("_id")
                     login_user = {"$set": {"logged_in": True}}
                     user_collection.update_one({"_id": user_id}, login_user)
-                    Globals.b.update({"user_is_authenticated": True})
+                    Globals.b.update({"user_username":username,"user_is_authenticated": True})
                     response.session["user_information"] = Globals.b
                     messages.success(response, f"{username} is now logged in! Have a nice day.")
                     return redirect("/")
