@@ -717,6 +717,7 @@ select{
 
 .m-4{
   margin: 1rem;
+<<<<<<< HEAD
 }
 
 .m-2{
@@ -725,10 +726,16 @@ select{
 
 .m-auto{
   margin: auto;
+=======
+>>>>>>> new_feature
 }
 
 .m-5{
   margin: 1.25rem;
+}
+
+.m-auto{
+  margin: auto;
 }
 
 .mx-auto{
@@ -784,6 +791,13 @@ select{
   height: 16rem;
 }
 
+<<<<<<< HEAD
+=======
+.h-36{
+  height: 9rem;
+}
+
+>>>>>>> new_feature
 .w-\[100\%\]{
   width: 100%;
 }
@@ -808,6 +822,10 @@ select{
 
 .w-9{
   width: 2.25rem;
+}
+
+.w-\[95\%\]{
+  width: 95%;
 }
 
 .w-64{
@@ -1170,6 +1188,14 @@ select{
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.group:hover .group-hover\:block{
+  display: block;
+}
+
+.group:hover .group-hover\:hidden{
+  display: none;
 }
 
 .peer:hover ~ .peer-hover\:block{

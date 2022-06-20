@@ -6,60 +6,95 @@
 {% block static %}{% endblock %}
 
 {% block content %}
-<form method="POST">
-  {% csrf_token %}
-  <div class="blog_item flex flex-col m-auto w-64 h-64 md:w-[500px] md:h-[500px] lg:h-[500px] lg:w-[700px] xl:h-[500px] xl:w-[700px]">
-    <div class="flex items-center justify-end relative">
-      <div class="peer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="feather feather-info">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="16" x2="12" y2="12"></line>
-          <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
+  <div class="p-2 grid grid-cols-1 lg:xl:grid-cols-[80%_20%]">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="blog_item flex flex-col m-auto w-64 h-64 md:w-[500px] md:h-[500px] lg:h-[500px] lg:w-[700px] xl:h-[500px] xl:w-[700px]">
+        <div class="flex items-center justify-end relative">
+          <div class="peer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-info">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <div class="hidden peer-hover:block absolute bg-gray-300 left-0 top-8 p-2 rounded-sm transition-all ease-in"
+            id="blog_time_created" name="blog_time_created">
+            Created at:<br> {{ blog_items.time }}
+          </div>
+          <div class="text-xl font-bold grow text-right" id="blog_title" name="blog_title">
+            {{ blog_items.title }}
+          </div>
+        </div>
+        <div class="text-right my-auto " id="blog_paragraph_body" name="blog_paragraph_body">
+          {{ blog_items.Paragraph_body }}
+        </div>
+        <div class="flex justify-center items-center h-max" id="blog_buttons" name="blog_buttons">
+          <div class="hidden" id="cancel_button" name="cancel_button">
+            <button type="button" value="cancel_edit_blog" id="cancel_edit_blog" name="cancel_edit_blog">cancel</button>
+          </div>
+          <div class="blog-btn">
+            <button type="button" value="edit_blog" id="edit_blog" name="edit_blog">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-edit-3">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="blog-btn">
+            <button type="submit" value="save_blog" id="save_blog" name="save_blog">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-save">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="hidden peer-hover:block absolute bg-gray-300 left-0 top-8 p-2 rounded-sm transition-all ease-in"
-        id="blog_time_created" name="blog_time_created">
-        Created at:<br> {{ blog_items.time }}
+    </form>
+    <div class="p-2 w-[100%] border-l-4 border-gray-500 h-max mt-2" name="right-sidebar">
+      <div class="text-center text-xl font-bold">
+        Comments
       </div>
-      <div class="text-xl font-bold grow text-right" id="blog_title" name="blog_title">
-        {{ blog_items.title }}
+      <div class="text-right m-4">
+        {% for comment in comments %}
+          <div class="group">  
+            <div class="hidden group-hover:block transition-all">
+              by: {{ comment.user }}
+            </div>
+            <div class="group-hover:hidden">
+              {{ comment.comment }}
+            </div>
+            <hr class="m-2 w-full text-2xl">
+          </div>
+        {% endfor %}
       </div>
-    </div>
-    <div class="text-right my-auto " id="blog_paragraph_body" name="blog_paragraph_body">
-      {{ blog_items.Paragraph_body }}
-    </div>
-    <div class="flex justify-center items-center h-max" id="blog_buttons" name="blog_buttons">
-      <div class="hidden" id="cancel_button" name="cancel_button">
-        <button type="button" value="cancel_edit_blog" id="cancel_edit_blog" name="cancel_edit_blog">cancel</button>
-      </div>
-      <div class="blog-btn">
-        <button type="button" value="edit_blog" id="edit_blog" name="edit_blog">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="feather feather-edit-3">
-            <path d="M12 20h9"></path>
-            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-          </svg>
-        </button>
-      </div>
-      <div class="blog-btn">
-        <button type="submit" value="save_blog" id="save_blog" name="save_blog">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="feather feather-save">
-            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-            <polyline points="17 21 17 13 7 13 7 21"></polyline>
-            <polyline points="7 3 7 8 15 8"></polyline>
-          </svg>
-        </button>
+      <div class="text-center">
+        <form method="POST" action="/">
+          {% csrf_token %}
+          <input class="hidden" type="text" name="comment_user" id="comment_user" 
+            {% if authenticated_user.user_is_authenticated or authenticated_user.user_username %}
+              value="{{ authenticated_user.user_username }}"
+            {% endif %}>    
+          <input type="text" name="comment_input" id="comment_input">
+          <button class="m-2 hover:text-gray-300 transition" type="submit" id="comment_submit_button"
+            name="comment_submit_button" value="comment_submit_button">Comment</button>
+        </form>
       </div>
     </div>
   </div>
-</form>
+{% endblock %}
+
+{% block right_sidebar %}
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'blogs.js' %}"></script>
+  <script src="{% static 'blogs.js' %}"></script>
 {% endblock %}

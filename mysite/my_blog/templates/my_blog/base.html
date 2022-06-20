@@ -7,10 +7,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   {% tailwind_css %}
   {% load static %}
   {% block static_files %}{% endblock %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body class="font-Lato bg-gray-50">
@@ -51,16 +51,19 @@
         </form>
       </div>
     </nav>
-    <div>
+    <div id="flash_messages_container" name="flash_messages_container">
       {% if messages %}
-        {% for message in messages %}
-          <div class="text-center p-2 bg-gray-200 flex w-[90%] rounded-b-xl" name="flash_messages" id="flash_messages">{{ message }}</div>
-        {% endfor %}
+        <div class="flex justify-center" name="flash_messages" id="flash_messages">
+          {% for message in messages %}
+            <div class="bg-gray-200 flex w-[95%] rounded-b-xl p-2" name="messages" id="messages">
+              <div class="text-center flex-1">{{ message }}</div>
+            </div>
+          {% endfor %}
+        </div>
       {% endif %}
     </div>
-    <div class="grid grid-cols-1 lg:xl:grid-cols-[80%_20%]">
-      <div class="p-2" name="main-content">{% block content %}{% endblock %}</div>
-      {% block right_sidebar %}{% endblock %}
+    <div name="main-content">
+      {% block content %}{% endblock %}
     </div>
     <div class="text-center" name="bottom">
       <footer>
