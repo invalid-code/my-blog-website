@@ -29,7 +29,7 @@ SECRET_KEY = f'{os.environ.get("SECRET_KEY")}'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["jess--blog.herokuapp.com", "www.jess--blog.herokuapp.com"]
 
 
 # Application definition
