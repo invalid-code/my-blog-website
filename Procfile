@@ -1,2 +1,2 @@
---chdir=/your/app/dir
-web: gunicorn mysite/mysite.wsgi
+--chdir=/mysite
+web: gunicorn mysite.wsgi
