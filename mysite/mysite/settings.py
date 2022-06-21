@@ -27,7 +27,8 @@ load_dotenv(find_dotenv())
 SECRET_KEY = f'{os.environ.get("SECRET_KEY")}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = os.environ.get("DEBUG") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = ["jess--blog.herokuapp.com", "www.jess--blog.herokuapp.com"]
 
