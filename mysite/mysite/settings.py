@@ -31,7 +31,7 @@ SECRET_KEY = f'{os.environ.get("SECRET_KEY")}'
 # DEBUG = True
 DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = ["jess--blog.herokuapp.com", "www.jess--blog.herokuapp.com"]
+ALLOWED_HOSTS = ["jess--blog.herokuapp.com"]
 
 
 # Application definition
@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     # 'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
@@ -127,12 +128,12 @@ USE_TZ = True
 
 STATIC_ROOT = "staticfiles"
 
-STATIC_URL = 'staticfiles'
+STATIC_URL = "static/"
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "static"),
     # os.path.join(BASE_DIR, "my_blog\\static\\my_blog"),
     # os.path.join(BASE_DIR, "theme\\static\\css\\dist"),
 ]
